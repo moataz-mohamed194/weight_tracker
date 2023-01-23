@@ -25,7 +25,8 @@ class FormWeightWidget extends StatelessWidget {
             child: TextFormField(
               controller: _titleController,
               validator: (val) =>
-                  val!.isEmpty ? 'the weight of Weight' : null,
+                  val!.isEmpty ? 'add the weight' : null,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(hintText: 'Weight'),
               // minLines: 2,
               // maxLines: 2,

@@ -27,8 +27,12 @@ class FormWidget extends StatelessWidget {
             child: TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              validator: (val) => val!.isEmpty ? 'must add the email' : null,
-              decoration: InputDecoration(hintText: 'Name'),
+              validator: (val) => val!.isEmpty
+                  ? 'must add the email'
+                  : val.contains(RegExp(r"^\S+@\S+\.\S+$")) == false
+                      ? "must add valid email"
+                      : null,
+              decoration: InputDecoration(hintText: 'Email'),
             ),
           ),
           Padding(
@@ -36,8 +40,11 @@ class FormWidget extends StatelessWidget {
             child: TextFormField(
                 controller: _passwordController,
                 keyboardType: TextInputType.text,
-                validator: (val) =>
-                    val!.isEmpty ? 'must add the password' : null,
+                validator: (val) => val!.isEmpty
+                    ? 'must add the password'
+                    : val.length < 8
+                        ? "the password must be more than 8 digits"
+                        : null,
                 decoration: InputDecoration(hintText: 'password'),
                 obscureText: true),
           ),
@@ -83,7 +90,6 @@ class FormWidget extends StatelessWidget {
         email: _emailController.text.toString(),
         password: _passwordController.text.toString(),
       );
-
       BlocProvider.of<LoginBloc>(context).add(AddUserEvent(login: login));
     }
   }
